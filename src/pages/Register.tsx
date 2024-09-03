@@ -1,3 +1,5 @@
+import Button from "../components/Button";
+
 type RegisterProps = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRegister: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -22,7 +24,13 @@ const Register = ({ handleChange, handleRegister }: RegisterProps) => {
           placeholder="パスワード"
           required
         />
-        <button>登録</button>
+        
+          <Button
+            text="登録"
+            buttonColor="#2190f8"
+            padding={[5,200,5,200]}
+          />
+        
       </form>
     </>
   );

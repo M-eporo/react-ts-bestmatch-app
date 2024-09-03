@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Header from "./components/Header";
+import SearchDetailed from "./pages/SearchDetaild";
+import "./App.css";
 
 const App = () => {
   const navigate = useNavigate();
@@ -24,11 +26,13 @@ const App = () => {
     e.preventDefault();
     localStorage.setItem("user-data", JSON.stringify(user));
     setLoggedIn(true);
+    navigate("/search");
   };
 
   const handleDelete = () => {
     localStorage.removeItem("user-data");
     setLoggedIn(false);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -36,12 +40,16 @@ const App = () => {
     if(userData){
       setLoggedIn(true);
     }
+    if(userData){
+      setUser(userData);
+    }
   }, []);
 
   return (
     <>
     <Header loggedIn={loggedIn} handleDelete={handleDelete}
     user={user}/>
+    <main>
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="*" element={<h1>ページがありません。</h1>}/>
@@ -54,8 +62,10 @@ const App = () => {
           />
         }/>
       {loggedIn && <Route path="/search" element={<Search/>}/>}
+      {loggedIn && <Route path="/search-detailed" element={<SearchDetailed/>}/>}
       
     </Routes>
+    </main>
     </>
   );
 };

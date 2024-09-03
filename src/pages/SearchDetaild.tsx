@@ -3,24 +3,32 @@ import Button from "../components/Button";
 import List from "../components/List";
 import Loading from "../components/Loading";
 
-export type CandidateProps = {
-  firstName: string;
-  email: string;
-  height: number;
-}
+export type CandidatePropsD = {
+  picture: {
+    large: string;
+  }
+  name: {
+      first: string;
+  };
+  dob: {
+    age: number;
+  };
+  phone: string;
+};
 
-const Search = () => {
-  const [candidate, setCandidate] = useState<CandidateProps[]>([]);
+const SearchDetailed = () => {
+  const [candidateD, setCandidateD] = useState<CandidatePropsD[]>([]);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
 
   const getCandidateData = () => {
     setLoading(true);
-    fetch("https://dummyjson.com/users?limit=30")
+    fetch("https://randomuser.me/api/?results=12")
     .then(response => response.json())
     .then(data => {
-      const shuffleData = data.users.sort(() => Math.random() - 0.5);
-      setCandidate(shuffleData);
+      console.log(data);
+      const shuffleData = data.results.sort(() => Math.random() - 0.5);
+      setCandidateD(shuffleData);
       setLoading(false);
       setCount(prevCount => prevCount + 1);
     })
@@ -32,7 +40,7 @@ const Search = () => {
 
   return (
     <div className="search">
-      <h2>検索ページ</h2>
+      <h2>検索ページ（詳細）</h2>
       <Button
         text="候補者を表示"
         buttonColor="#2c7ce5"
@@ -49,11 +57,11 @@ const Search = () => {
       {loading ?
         <Loading/>
       :  
-        <List candidate={candidate}/>
+        <List candidate={candidateD}/>
       }
 
     </div>
   );
 };
 
-export default Search;
+export default SearchDetailed;
